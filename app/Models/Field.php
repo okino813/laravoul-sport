@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Field extends Model
 {
-    use HasFactory;
-
     protected $fillable = ['name', 'value_', 'id_unit'];
 
     public function unit()

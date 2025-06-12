@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FieldController extends Controller
@@ -10,9 +12,10 @@ class FieldController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+     public function index()
     {
-        //
+        $fields = Field::All();
+        return view('fields.index', compact('fields'));
     }
 
     /**
@@ -20,7 +23,8 @@ class FieldController extends Controller
      */
     public function create()
     {
-        //
+        $units = Unit::all();
+        return view('fields.create', compact('units'));
     }
 
     /**
@@ -28,7 +32,19 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
+            'unit_id' => 'required|integer|exists:units,id',
+        ]);
+
+        Field::create([
+            'name' => $request->input('name'),
+            'value' => $request->input('value'),
+            'unit_id' => $request->input('unit_id'),
+        ]);
+
+        return redirect()->route('fields.index')->with('success', 'Utilisateur créé avec succès.');
     }
 
     /**
@@ -36,7 +52,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        //
+        return view('fields.show', compact('field'));
     }
 
     /**
@@ -44,7 +60,7 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        //
+        return view('fields.edit', compact('field'));
     }
 
     /**
@@ -52,7 +68,8 @@ class FieldController extends Controller
      */
     public function update(Request $request, Field $field)
     {
-        //
+        $field->update($request->all());
+        return redirect()->route('fields.index')->with('success', 'Field mis à jour avec succès.');
     }
 
     /**
@@ -60,6 +77,7 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        //
+        $field->delete();
+        return redirect()->route('fields.index')->with('success', 'Field mis à jour avec succès.');
     }
 }
