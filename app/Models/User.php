@@ -17,11 +17,9 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+    protected $fillable = ['firstname', 'lastname', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +42,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+     public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'membres', 'id_user', 'id_group');
+    }
+
+    public function practices()
+    {
+        return $this->hasMany(Practice::class, 'id_user');
+    }
+
+    public function competitions()
+    {
+        return $this->hasMany(Competition::class, 'id_user');
     }
 }
