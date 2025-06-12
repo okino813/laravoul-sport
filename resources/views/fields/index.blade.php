@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <a href="/home" class="back-btn">< Retours</a>
-        <h1>Liste des utilisateurs</h1>
+        <h1>Liste des fields</h1>
 
         <a href="{{ route('fields.create') }}" class="btn btn-primary mb-3">Créer un nouvel utilisateur</a>
 
@@ -11,8 +11,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nom</th>
-                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Unit</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -21,7 +21,7 @@
                 <tr>
                     <td>{{ $field->id }}</td>
                     <td>{{ $field->name }}</td>
-                    <td>{{ $field->email }}</td>
+                    <td>{{ $field->unit->name }}</td>
                     <td>
                         <a href="{{ route('fields.show', $field) }}" class="btn btn-info btn-sm">Voir</a>
                         <a href="{{ route('fields.edit', $field) }}" class="btn btn-warning btn-sm">Éditer</a>

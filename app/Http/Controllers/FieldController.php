@@ -14,7 +14,7 @@ class FieldController extends Controller
      */
      public function index()
     {
-        $fields = Field::All();
+        $fields = Field::with('unit')->get();
         return view('fields.index', compact('fields'));
     }
 
@@ -52,6 +52,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
+        $field->load('unit');
         return view('fields.show', compact('field'));
     }
 
