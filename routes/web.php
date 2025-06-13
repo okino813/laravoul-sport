@@ -6,6 +6,7 @@ use App\Http\Controllers\FieldController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\SportController;
+use App\Http\Controllers\GroupController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +16,7 @@ Route::get('/', function () {
 Route::resource('users', UserController::class);
 Route::resource('units', UnitController::class);
 Route::resource('sports', SportController::class);
+Route::resource('groups', GroupController::class);
 
 
 // Ici c'est des CRUD avec des foring key
