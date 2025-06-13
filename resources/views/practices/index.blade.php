@@ -1,17 +1,20 @@
-@extends('layouts.app') {{-- si tu as un layout commun --}}
+@extends('layouts/app') {{-- si tu as un layout commun --}}
 
 @section('content')
     <div class="container">
         <a href="/home" class="back-btn">< Retours</a>
         <h1>Liste des entrainements</h1>
 
-        <a href="{{ route('practices.create') }}" class="btn btn-primary mb-3">Créer un nouvel utilisateur</a>
+        <a href="{{ route('practices.create') }}" class="btn btn-primary mb-3">Créer un entrainement</a>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
+                    <th>Sport</th>
+                    <th>User</th>
+                    <th>Group</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
@@ -21,6 +24,9 @@
                 <tr>
                     <td>{{ $practice->id }}</td>
                     <td>{{ $practice->name }}</td>
+                    <td>{{ $practice->sport->name }}</td>
+                    <td>{{ $practice->user->email }}</td>
+                    <td>{{ $practice->group->name }}</td>
                     <td>{{ $practice->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         <a href="{{ route('practices.show', $practice) }}" class="btn btn-info btn-sm">Voir</a>

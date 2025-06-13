@@ -32,9 +32,8 @@
             <div class="mb-3">
                 <label for="unit_id" class="form-label">Unité choisie</label>
                 <select name="unit_id" id="unit_id" class="form-control" required>
-                    <option value="">-- Sélectionner une unité --</option>
                     @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
+                        <option value="{{ $unit->id }}">
                             {{ $unit->name }}
                         </option>
                     @endforeach
