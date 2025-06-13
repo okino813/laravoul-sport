@@ -30,6 +30,8 @@
 
                     <ul><li><a href="/members">Listes des membres</a></li></ul>
 
+                    <ul><li><a href="/practicevalues">Listes des valeur d'entrainement</a></li></ul>
+
             </div>
         </div>
     </div>

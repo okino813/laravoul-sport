@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('practice_values', function (Blueprint $table) {
             $table->id();
+            $table->string('value');
             $table->foreignId('practice_id')->constrained()->onDelete('cascade');
             $table->foreignId('field_id')->constrained()->onDelete('cascade');
             $table->timestamps();
