@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $units = Unit::All();
+        return view('units.index', compact('units'));
     }
 
     /**
@@ -20,7 +19,7 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        return view('units.create');
     }
 
     /**
@@ -28,7 +27,15 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Unit::create([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()->route('units.index')->with('success', 'Unité créé avec succès.');
     }
 
     /**
@@ -36,7 +43,7 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        return view('units.show', compact('unit'));
     }
 
     /**
@@ -44,7 +51,7 @@ class UnitController extends Controller
      */
     public function edit(Unit $unit)
     {
-        //
+        return view('units.edit', compact('unit'));
     }
 
     /**
@@ -52,7 +59,12 @@ class UnitController extends Controller
      */
     public function update(Request $request, Unit $unit)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $unit->update($validated);
+        return redirect()->route('units.index')->with('success', 'Unité mis à jour avec succès.');
     }
 
     /**
@@ -60,6 +72,7 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
-        //
+        $unit->delete();
+        return redirect()->route('units.index')->with('success', 'Unité mis à jour avec succès.');
     }
 }
