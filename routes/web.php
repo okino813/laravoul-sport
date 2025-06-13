@@ -7,6 +7,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\GroupSportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,10 @@ Route::resource('groups', GroupController::class);
 Route::resource('fields', FieldController::class);
 Route::resource('practices', PracticeController::class);
 
+// CRUD table pivot
+Route::resource('groups-sport', GroupSportController::class)->only([
+    'index', 'create', 'store', 'destroy'
+]);
 
 Auth::routes();
 
