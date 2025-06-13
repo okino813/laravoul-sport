@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">Nom : {{ $field->name }}</h5>
                 <h5 class="card-title">Value : {{ $field->value }}</h5>
-                <p class="card-text"><strong>Email :</strong> {{ $field->unit->name }}</p>
+                <p class="card-text"><strong>Unité :</strong> {{ $field->unit->name }}</p>
                 <p class="card-text"><strong>Créé le :</strong> {{ $field->created_at->format('d/m/Y H:i') }}</p>
                 <p class="card-text"><strong>Mis à jour le :</strong> {{ $field->updated_at->format('d/m/Y H:i') }}</p>
 

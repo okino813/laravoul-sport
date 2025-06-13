@@ -61,7 +61,9 @@ class FieldController extends Controller
      */
     public function edit(Field $field)
     {
-        return view('fields.edit', compact('field'));
+        $units = Unit::all();
+        $field->load('unit');
+        return view('fields.edit', compact('field', 'units'));
     }
 
     /**
@@ -69,7 +71,13 @@ class FieldController extends Controller
      */
     public function update(Request $request, Field $field)
     {
-        $field->update($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'value' => 'required|string|max:255',
+            'unit_id' => 'required|exists:units,id',
+        ]);
+
+        $field->update($validated);
         return redirect()->route('fields.index')->with('success', 'Field mis à jour avec succès.');
     }
 

@@ -5,7 +5,7 @@
         <a href="/home" class="back-btn">< Retours</a>
         <h1>Liste des fields</h1>
 
-        <a href="{{ route('fields.create') }}" class="btn btn-primary mb-3">Créer un nouvel utilisateur</a>
+        <a href="{{ route('fields.create') }}" class="btn btn-primary mb-3">Créer un nouveau field</a>
 
         <table class="table table-bordered">
             <thead>
