@@ -21,6 +21,8 @@
                     <ul><li><a href="/units">Listes des unités</a></li></ul>
 
                     <ul><li><a href="/practices">Listes des entrainments</a></li></ul>
+
+                    <ul><li><a href="/sports">Listes des sports</a></li></ul>
             </div>
         </div>
     </div>

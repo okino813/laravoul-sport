@@ -5,16 +5,22 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\PracticeController;
+use App\Http\Controllers\SportController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Route crud pour User
+// Route crud sans foreing key
 Route::resource('users', UserController::class);
-Route::resource('fields', FieldController::class);
 Route::resource('units', UnitController::class);
+Route::resource('sports', SportController::class);
+
+
+// Ici c'est des CRUD avec des foring key
+Route::resource('fields', FieldController::class);
 Route::resource('practices', PracticeController::class);
+
 
 Auth::routes();
 
