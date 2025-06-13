@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('groups-sport.index') }}" class="back-btn">< Retours</a>
-        <h1>Créer un group sport</h1>
+        <a href="{{ route('members.index') }}" class="back-btn">< Retours</a>
+        <h1>Ajouter des membres</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('groups-sport.store') }}" method="POST">
+        <form action="{{ route('members.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -29,10 +29,10 @@
             </div>
 
             <div class="mb-3">
-                <label for="sport_id">Sport :</label>
-                <select name="sport_id" required>
-                    @foreach($sports as $sport)
-                        <option value="{{ $sport->id }}">{{ $sport->name }}</option>
+                <label for="user_id">User :</label>
+                <select name="user_id" required>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->email }}</option>
                     @endforeach
                 </select>
             </div>

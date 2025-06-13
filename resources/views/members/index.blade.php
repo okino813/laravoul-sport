@@ -3,16 +3,16 @@
 @section('content')
     <div class="container">
         <a href="/home" class="back-btn">< Retours</a>
-        <h1>Liste des groups-sport</h1>
+        <h1>Liste des membres</h1>
 
-        <a href="{{ route('groups-sport.create') }}" class="btn btn-primary mb-3">Créer une relation</a>
+        <a href="{{ route('members.create') }}" class="btn btn-primary mb-3">Créer une relation</a>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Groupe</th>
-                    <th>Sport</th>
+                    <th>User</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -21,9 +21,9 @@
                 <tr>
                     <td>{{ $relation->id }}</td>
                     <td>{{ $relation->group->name }}</td>
-                    <td>{{ $relation->sport->name }}</td>
+                    <td>{{ $relation->user->email }}</td>
                     <td>
-                        <form action="{{ route('groups-sport.destroy', $relation->id) }}" method="POST">
+                        <form action="{{ route('members.destroy', $relation->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>

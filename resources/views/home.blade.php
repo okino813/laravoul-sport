@@ -26,8 +26,10 @@
 
                     <ul><li><a href="/groups">Listes des groups</a></li></ul>
 
-
                     <ul><li><a href="/groups-sport">Assignation des sports aux groups</a></li></ul>
+
+                    <ul><li><a href="/members">Listes des membres</a></li></ul>
+
             </div>
         </div>
     </div>
