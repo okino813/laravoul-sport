@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\PracticeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +14,7 @@ Route::get('/', function () {
 Route::resource('users', UserController::class);
 Route::resource('fields', FieldController::class);
 Route::resource('units', UnitController::class);
+Route::resource('practices', PracticeController::class);
 
 Auth::routes();
 

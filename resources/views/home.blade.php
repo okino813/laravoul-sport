@@ -19,6 +19,8 @@
                     <ul><li><a href="/fields">Listes des fields</a></li></ul>
 
                     <ul><li><a href="/units">Listes des unités</a></li></ul>
+
+                    <ul><li><a href="/practices">Listes des entrainments</a></li></ul>
             </div>
         </div>
     </div>

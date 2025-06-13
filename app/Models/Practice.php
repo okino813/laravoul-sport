@@ -8,7 +8,7 @@ class Practice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date_', 'id_group', 'id_user'];
+    protected $fillable = ['name','id_group', 'id_user'];
 
     public function group()
     {
