@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+});
+
 // Route crud sans foreing key
 Route::resource('users', UserController::class);
 Route::resource('units', UnitController::class);

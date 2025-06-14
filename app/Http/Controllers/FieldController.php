@@ -34,13 +34,11 @@ class FieldController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
             'unit_id' => 'required|integer|exists:units,id',
         ]);
 
         Field::create([
             'name' => $request->input('name'),
-            'value' => $request->input('value'),
             'unit_id' => $request->input('unit_id'),
         ]);
 
@@ -73,7 +71,6 @@ class FieldController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'value' => 'required|string|max:255',
             'unit_id' => 'required|exists:units,id',
         ]);
 

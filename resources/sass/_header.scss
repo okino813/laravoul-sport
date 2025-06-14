@@ -1,0 +1,17 @@
+header {
+    background: #706f6c;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        gap: 40px;
+        font-size: 25px;
+
+        li {
+            text-decoration: none;
+        }
+    }
+}
