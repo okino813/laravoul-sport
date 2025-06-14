@@ -17,23 +17,18 @@
             </div>
         @endif
 
-        <form action="{{ route('dashboard.users.update') }}" method="POST">
+        <form action="{{ route('dashboard.users.password.update') }}" method="POST">
             @method('PUT')
             @csrf
 
             <div class="mb-3">
-                <label for="firstname" class="form-label">Firstname</label>
-                <input type="text" name="firstname" id="firstname" class="form-control" value="{{ $user->firstname }}" required>
+                <label for="password" class="form-label">Nouveau mot de passe</label>
+                <input type="password" name="password" id="password" class="form-control" required>
             </div>
 
             <div class="mb-3">
-                <label for="lastname" class="form-label">Lastname</label>
-                <input type="text" name="lastname" id="lastname" class="form-control" value="{{ $user->lastname }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Adresse email</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" required>
+                <label for="passwordConfirm" class="form-label">Password Confirm</label>
+                <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" required>
             </div>
 
             <button type="submit" class="btn btn-success">Modifier</button>

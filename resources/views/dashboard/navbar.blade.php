@@ -3,8 +3,8 @@
     <ul>
         <li>Profile
             <ul>
-                <li><a href="#">Info personel</a></li>
-                <li><a href="#">Sécurité</a></li>
+                <li><a href="/dashboard/user">Info personel</a></li>
+                <li><a href="/dashboard/user/password">Sécurité</a></li>
             </ul>
         </li>
 

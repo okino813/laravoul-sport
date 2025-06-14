@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -49,26 +51,76 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show()
     {
-        return view('users.show', compact('user'));
+        // On test si l'utilisateur est authentifier
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+        return view('dashboard.user', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit()
     {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+
         return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+         $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+        ]);
+
         $user->update($request->all());
-        return redirect()->route('users.index')->with('success', 'Utilisateur mis à jour avec succès.');
+        return redirect()->route('users.edit', compact('user'))->with('success', 'Utilisateur mis à jour avec succès.');
+    }
+
+
+    public function editPassword()
+    {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+        return view('users.password', compact('user'));
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+         $request->validate([
+            'password' => 'required|min:6',
+            'passwordConfirm' => 'required|same:password'
+        ]);
+        $user->update([
+            'password' => Hash::make($request->input('password'))
+        ]);
+        return redirect()->route('editPassword')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
     /**

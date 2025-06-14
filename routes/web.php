@@ -15,9 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-});
+// Dasboard
+Route::get('/dashboard', [UserController::class, 'show']);
+Route::get('/dashboard/user', [UserController::class, 'edit']);
+Route::put('/dashboard/user/update',[UserController::class, 'update'])->name('dashboard.users.update');
+Route::get('/dashboard/user/password', [UserController::class, 'editPassword'])->name('editPassword');
+Route::put('/dashboard/user/password/update',[UserController::class, 'updatePassword'])->name('dashboard.users.password.update');
 
 // Route crud sans foreing key
 Route::resource('users', UserController::class);
