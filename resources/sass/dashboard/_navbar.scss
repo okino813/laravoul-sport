@@ -1,0 +1,14 @@
+body{
+    .dashboard-layout{
+        display: flex;
+
+        .sidebar{
+            background: #2C2C2C;
+            border-right: 1px solid white;
+            width: 300px;
+            height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+    }
+}

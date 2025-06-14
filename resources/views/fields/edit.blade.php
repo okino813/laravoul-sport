@@ -25,11 +25,6 @@
                 <input type="text" name="name" id="name" class="form-control" value="{{ $field->name }}" required>
             </div>
 
-            <div class="mb-3">
-                <label for="value" class="form-label">Value</label>
-                <input type="text" name="value" id="value" class="form-control" value="{{ $field->value }}" required>
-            </div>
-
              <div class="mb-3">
                 <label for="unit_id" class="form-label">Unité</label>
                 <select name="unit_id" id="unit_id" class="form-control" required>

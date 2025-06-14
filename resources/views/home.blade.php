@@ -14,6 +14,9 @@
                         </div>
                     @endif
 
+                    <ul><li><a href="/dashboard">Accès au Dashboard</a></li></ul>
+
+
                     <ul><li><a href="/users">Listes des utilisateurs</a></li></ul>
 
                     <ul><li><a href="/fields">Listes des fields</a></li></ul>

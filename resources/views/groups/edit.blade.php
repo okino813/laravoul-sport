@@ -1,8 +1,9 @@
-@extends('layouts.app')
+@extends('dashboard.header')
+
+@section('title', 'Mon Dashboard')
 
 @section('content')
     <div class="container">
-        <a href="{{ route('groups.index') }}" class="back-btn">< Retours</a>
         <h1>Editer un group</h1>
 
         @if ($errors->any())

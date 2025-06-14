@@ -25,11 +25,6 @@
             </div>
 
             <div class="mb-3">
-                <label for="value" class="form-label">Value</label>
-                <input type="text" name="value" id="value" class="form-control" value="{{ old('value') }}" required>
-            </div>
-
-            <div class="mb-3">
                 <label for="unit_id" class="form-label">Unité choisie</label>
                 <select name="unit_id" id="unit_id" class="form-control" required>
                     @foreach ($units as $unit)
