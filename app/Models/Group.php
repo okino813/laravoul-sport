@@ -9,7 +9,7 @@ class Group extends Model
 
     protected $table = 'groups';
     protected $primaryKey = 'id';
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id'];
 
     public function users()
     {

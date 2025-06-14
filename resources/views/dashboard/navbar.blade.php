@@ -10,10 +10,12 @@
 
         <li>Mes groupes / équipes
             <ul>
-                <li><a href="#">Group 1</a></li> {{-- Ici on peut afficher les infos de l'équipe avec
+                @foreach($groupsList as $groupItem)
+                    <li><a href="/dashboard/group/{{$groupItem->id}}">{{$groupItem->name}}</a></li>{{-- Ici on peut afficher les infos de l'équipe avec
                 la liste des sports et des membres --}}
-                <li><a href="#">Group 2</a></li>
-                <li><a href="#">Toutes les équipes</a></li> {{-- Ici on peut afficher la liste des groups
+                @endforeach
+
+                <li><a href="{{route("dashboard.groups.index")}}">Toutes les équipes</a></li> {{-- Ici on peut afficher la liste des groups
                 ainsi que la possibilité de cliquer sur une et de voir les infos de l'équipe avec
                 la liste des sports et des membres --}}
             </ul>
@@ -34,8 +36,8 @@
     <ul>
         <li>Group
             <ul>
-                <li><a href="#">Crée un group</a></li>
-                <li><a href="#">Mes groups</a></li>
+                <li><a href="{{route("dashboard.group.create")}}">Crée un group</a></li>
+                <li><a href="{{route("dashboard.groups.mygroups")}}">Mes groups</a></li>
                 {{-- Lite des groupes avec boutons modifier et ajout de membres et la supression, ainsi que les sports--}}
             </ul>
         </li>

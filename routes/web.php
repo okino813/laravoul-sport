@@ -16,11 +16,19 @@ Route::get('/', function () {
 });
 
 // Dasboard
-Route::get('/dashboard', [UserController::class, 'show']);
-Route::get('/dashboard/user', [UserController::class, 'edit']);
-Route::put('/dashboard/user/update',[UserController::class, 'update'])->name('dashboard.users.update');
-Route::get('/dashboard/user/password', [UserController::class, 'editPassword'])->name('editPassword');
-Route::put('/dashboard/user/password/update',[UserController::class, 'updatePassword'])->name('dashboard.users.password.update');
+Route::get('/dashboard', [UserController::class, 'show'])->middleware('share.data');
+Route::get('/dashboard/user', [UserController::class, 'edit'])->middleware('share.data');
+Route::put('/dashboard/user/update',[UserController::class, 'update'])->name('dashboard.users.update')->middleware('share.data');
+Route::get('/dashboard/user/password', [UserController::class, 'editPassword'])->name('editPassword')->middleware('share.data');
+Route::put('/dashboard/user/password/update',[UserController::class, 'updatePassword'])->name('dashboard.users.password.update')->middleware('share.data');
+
+Route::get('/dashboard/group/create', [GroupController::class, 'create'])->name('dashboard.group.create')->middleware('share.data');
+Route::get('/dashboard/group/{group}', [GroupController::class, 'show'])->name('dashboard.group.show')->middleware('share.data');
+Route::delete('/dashboard/group/{group}', [GroupController::class, 'destroy'])->name('dashboard.group.destroy')->middleware('share.data');
+
+
+Route::get('/dashboard/groups/', [GroupController::class, 'index'])->name('dashboard.groups.index')->middleware('share.data');
+Route::get('/dashboard/mygroups/', [GroupController::class, 'mygroups'])->name('dashboard.groups.mygroups')->middleware('share.data');
 
 // Route crud sans foreing key
 Route::resource('users', UserController::class);
