@@ -6,19 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Practice extends Model
 {
-    use HasFactory;
 
-    protected $fillable = ['date_', 'id_group', 'id_user'];
+    protected $fillable = ['name','group_id','sport_id', 'user_id'];
 
     public function group()
     {
-        return $this->belongsTo(Group::class, 'id_group');
+        return $this->belongsTo(Group::class, 'group_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function sport()
+    {
+        return $this->belongsTo(Sport::class, 'sport_id');
+    }
+
 
     public function values()
     {

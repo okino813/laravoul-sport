@@ -14,13 +14,24 @@
                         </div>
                     @endif
 
-                    <ul>
-                        <li><a href="/users">Listes des utilisateurs</a></li>
-                    </ul>
+                    <ul><li><a href="/users">Listes des utilisateurs</a></li></ul>
 
-                    <ul>
-                        <li><a href="/fields">Listes des fields</a></li>
-                    </ul>
+                    <ul><li><a href="/fields">Listes des fields</a></li></ul>
+
+                    <ul><li><a href="/units">Listes des unités</a></li></ul>
+
+                    <ul><li><a href="/practices">Listes des entrainments</a></li></ul>
+
+                    <ul><li><a href="/sports">Listes des sports</a></li></ul>
+
+                    <ul><li><a href="/groups">Listes des groups</a></li></ul>
+
+                    <ul><li><a href="/groups-sport">Assignation des sports aux groups</a></li></ul>
+
+                    <ul><li><a href="/members">Listes des membres</a></li></ul>
+
+                    <ul><li><a href="/practicevalues">Listes des valeur d'entrainement</a></li></ul>
+
             </div>
         </div>
     </div>

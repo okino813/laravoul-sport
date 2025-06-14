@@ -11,7 +11,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nom</th>
                     <th>Email</th>
                     <th>Actions</th>
                 </tr>
@@ -20,7 +19,6 @@
                 @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         <a href="{{ route('users.show', $user) }}" class="btn btn-info btn-sm">Voir</a>

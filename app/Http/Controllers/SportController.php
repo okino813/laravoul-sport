@@ -7,12 +7,10 @@ use Illuminate\Http\Request;
 
 class SportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   public function index()
     {
-        //
+        $sports = Sport::All();
+        return view('sports.index', compact('sports'));
     }
 
     /**
@@ -20,7 +18,7 @@ class SportController extends Controller
      */
     public function create()
     {
-        //
+        return view('sports.create');
     }
 
     /**
@@ -28,7 +26,15 @@ class SportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Sport::create([
+            'name' => $request->input('name'),
+        ]);
+
+        return redirect()->route('sports.index')->with('success', 'Sport créé avec succès.');
     }
 
     /**
@@ -36,7 +42,7 @@ class SportController extends Controller
      */
     public function show(Sport $sport)
     {
-        //
+        return view('sports.show', compact('sport'));
     }
 
     /**
@@ -44,7 +50,7 @@ class SportController extends Controller
      */
     public function edit(Sport $sport)
     {
-        //
+        return view('sports.edit', compact('sport'));
     }
 
     /**
@@ -52,7 +58,12 @@ class SportController extends Controller
      */
     public function update(Request $request, Sport $sport)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $sport->update($validated);
+        return redirect()->route('sports.index')->with('success', 'Sport mis à jour avec succès.');
     }
 
     /**
@@ -60,6 +71,7 @@ class SportController extends Controller
      */
     public function destroy(Sport $sport)
     {
-        //
+        $sport->delete();
+        return redirect()->route('sports.index')->with('success', 'Sport mis à jour avec succès.');
     }
 }

@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
         <a href="{{ route('fields.index') }}" class="back-btn">< Retours</a>
-        <h1>Détails de l'utilisateur</h1>
+        <h1>Détails du field</h1>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Prénom : {{ $field->firstname }}</h5>
-                <h5 class="card-title">Nom de famille : {{ $field->lastname }}</h5>
-                <p class="card-text"><strong>Email :</strong> {{ $field->email }}</p>
+                <h5 class="card-title">Nom : {{ $field->name }}</h5>
+                <h5 class="card-title">Value : {{ $field->value }}</h5>
+                <p class="card-text"><strong>Unité :</strong> {{ $field->unit->name }}</p>
                 <p class="card-text"><strong>Créé le :</strong> {{ $field->created_at->format('d/m/Y H:i') }}</p>
                 <p class="card-text"><strong>Mis à jour le :</strong> {{ $field->updated_at->format('d/m/Y H:i') }}</p>
 

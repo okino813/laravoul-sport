@@ -1,0 +1,53 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <a href="{{ route('practicevalues.index') }}" class="back-btn">< Retours</a>
+        <h1>Editer un entrainement</h1>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Erreurs :</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('practicevalues.update', $practicevalue) }}" method="POST">
+            @method('PUT')
+            @csrf
+
+            <div class="mb-3">
+                <label for="value" class="form-label">Value</label>
+                <input type="text" name="value" id="value" class="form-control" value="{{ $practicevalue->value }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="field_id" class="form-label">Field</label>
+                <select name="field_id" id="field_id" class="form-control" required>
+                    @foreach ($fields as $field)
+                        <option value="{{old('field_id', $field->id)}}" {{$practicevalue->field_id == $field->id ? 'selected' : '' }}>
+                            {{ $field->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="practice_id" class="form-label">Entrainement</label>
+                <select name="practice_id" id="practice_id" class="form-control" required>
+                    @foreach ($practices as $practice)
+                        <option value="{{old('practice_id', $practice->id)}}" {{$practicevalue->practice_id == $practice->id ? 'selected' : '' }}>
+                            {{ $practice->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Modifier</button>
+        </form>
+    </div>
+@endsection
