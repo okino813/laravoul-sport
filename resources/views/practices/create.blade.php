@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('dashboard.header')
+
+@section('title', 'Mon Dashboard')
 
 @section('content')
    <div class="container">
@@ -25,35 +27,23 @@
             </div>
 
             <div class="mb-3">
-                <label for="sport_id" class="form-label">Sport choisie</label>
-                <select name="sport_id" id="sport_id" class="form-control" required>
-                    @foreach ($sports as $sport)
-                        <option value="{{ $sport->id }}">
-                            {{ $sport->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="group_id" class="form-label">Groupe choisie</label>
-                <select name="group_id" id="group_id" class="form-control" required>
+                <label for="champs" class="form-label">Sport choisie</label>
+                <select name="champs" id="champs" class="form-control" required>
                     @foreach ($groups as $group)
-                        <option value="{{ $group->id }}">
-                            {{ $group->name }}
-                        </option>
+                        @foreach($group->sports as $sport)
+                            <option value="{{ $group->id }}-{{$sport->id}}">
+                                {{ $group->name }} - {{$sport->name}}
+                            </option>
+                        @endforeach
                     @endforeach
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="user_id" class="form-label">User choisie</label>
-                <select name="user_id" id="user_id" class="form-control" required>
-                    @foreach ($users as $user)
+                <select name="user_id" id="user_id" class="form-control" required hidden>
                         <option value="{{ $user->id }}">
                             {{ $user->email }}
                         </option>
-                    @endforeach
                 </select>
             </div>
 

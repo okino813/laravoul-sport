@@ -25,39 +25,45 @@
                 <input type="text" name="name" id="name" class="form-control" value="{{ $practice->name }}" required>
             </div>
 
+            {{-- On affiche les champs--}}
             <div class="mb-3">
-                <label for="sport_id" class="form-label">Sports</label>
-                <select name="sport_id" id="sport_id" class="form-control" required>
-                    @foreach ($sports as $sport)
-                        <option value="{{old('sport_id', $sport->id)}}" {{$practice->sport->id == $sport->id ? 'selected' : '' }}>
-                            {{ $sport->name }}
+            <h2>Vos objectifs</h2>
+            @foreach($practiceRelation->values as $values)
+                     <label for="{{$values->field->name}}" class="form-label">{{$values->field->name}} en {{$values->field->unit->name}}</label>
+                    <input type="text" name="{{$values->field->name}}" id="{{$values->field->name}}" class="form-control" value="{{$values->value}}" required>
+            @endforeach
+            </div>
+            <button type="submit" class="btn btn-success">Modifier</button>
+        </form>
+
+         <form action="{{ route('dashboard.field.create', ['group' => $practice->group->id,"practice" => $practice->id]) }}" method="POST">
+            @method('POST')
+            @csrf
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{ $practice->name }}" required>
+            </div>
+
+            {{-- On propose d'ajouter les champs--}}
+            <div class="mb-3">
+            <h2>Ajouter vos champs</h2>
+                <label for="name" class="form-label">Nom du champs</label>
+                <input type="text" name="name" id="name" class="form-control" required>
+
+                <label for="value" class="form-label">Valeur du champs</label>
+                <input type="text" name="value" id="value" class="form-control" required>
+
+                <label for="unit" class="form-label">Unité</label>
+                <select name="unit" id="unit" class="form-control" required>
+                    @foreach ($units as $unit)
+                        <option value="{{ $unit->id }}">
+                            {{ $unit->name }}
                         </option>
                     @endforeach
                 </select>
-            </div>
 
-            <div class="mb-3">
-                <label for="user_id" class="form-label">Users</label>
-                <select name="user_id" id="user_id" class="form-control" required>
-                    @foreach ($users as $user)
-                        <option value="{{old('user_id', $user->id)}}" {{$practice->user->id == $user->id ? 'selected' : '' }}>
-                            {{ $user->email }}
-                        </option>
-                    @endforeach
-                </select>
             </div>
-
-            <div class="mb-3">
-                <label for="group_id" class="form-label">Group</label>
-                <select name="group_id" id="group_id" class="form-control" required>
-                    @foreach ($groups as $group)
-                        <option value="{{old('group_id', $group->id)}}" {{$practice->group->id == $group->id ? 'selected' : '' }}>
-                            {{ $group->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
             <button type="submit" class="btn btn-success">Modifier</button>
         </form>
     </div>

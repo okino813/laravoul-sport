@@ -16,11 +16,6 @@ class Field extends Model
         return $this->belongsTo(Unit::class, 'unit_id');
     }
 
-    public function competitionValues()
-    {
-        return $this->hasMany(CompetitionValue::class, 'field_id');
-    }
-
     public function practiceValues()
     {
         return $this->hasMany(PracticeValue::class, 'field_id');

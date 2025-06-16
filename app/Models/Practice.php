@@ -29,7 +29,7 @@ class Practice extends Model
 
     public function values()
     {
-        return $this->hasMany(PracticeValue::class, 'id_practice');
+        return $this->hasMany(PracticeValue::class, 'practice_id');
     }
 }
 

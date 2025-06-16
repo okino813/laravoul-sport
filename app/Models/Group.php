@@ -15,7 +15,7 @@ class Group extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'membres', 'id_group', 'id_user');
+        return $this->belongsToMany(User::class, 'members', 'group_id', 'user_id');
     }
 
     public function sports()
@@ -25,12 +25,12 @@ class Group extends Model
 
     public function practices()
     {
-        return $this->hasMany(Practice::class, 'id_group');
+        return $this->hasMany(Practice::class, 'group_id');
     }
 
     public function competitions()
     {
-        return $this->hasMany(Competition::class, 'id_group');
+        return $this->hasMany(Competition::class, 'group_id');
     }
 }
 

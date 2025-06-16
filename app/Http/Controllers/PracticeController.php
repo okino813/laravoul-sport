@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\Unit;
 use App\Models\Group;
 use App\Models\Practice;
 use App\Models\Sport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PracticeController extends Controller
 {
@@ -23,12 +25,15 @@ class PracticeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($group_id,$practice_id)
     {
-        $sports = Sport::all();
-        $groups = Group::all();
-        $users = User::all();
-        return view('practices.create', compact('groups', 'sports', 'users'));
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+         $groups = $user->groups()->with('sports')->get();
+        return view('practices.create', compact('groups', 'user'));
     }
 
     /**
@@ -36,26 +41,47 @@ class PracticeController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+
         $request->validate([
+            'champs' => ['required', 'regex:/^\d+-\d+$/'],
             'name' => 'required|string|max:255',
-            'group_id' => 'required|integer|exists:groups,id',
-            'sport_id' => 'required|integer|exists:sports,id',
-            'user_id' => 'required|integer|exists:users,id',
         ]);
+
+        list($group_id, $sport_id) = explode('-', $request->input('champs'));
+
+        // Vérifier que le groupe existe
+        $group = Group::find($group_id);
+        if (!$group) {
+            return back()->withErrors(['champs' => 'Groupe invalide'])->withInput();
+        }
+
+        // Vérifier que l'utilisateur appartient bien au groupe
+        $isMember = $group->users()->where('users.id', $user->id)->exists();
+        if (!$isMember) {
+            return back()->withErrors(['champs' => 'Vous n\'appartenez pas à ce groupe'])->withInput();
+        }
+
+        // Vérifier que le sport est bien lié au groupe
+        $sportExistsInGroup = $group->sports()->where('sport_id', $sport_id)->exists();
+        if (!$sportExistsInGroup) {
+            return back()->withErrors(['champs' => 'Sport non lié à ce groupe'])->withInput();
+        }
 
         Practice::create([
             'name' => $request->input('name'),
-            'group_id' => $request->input('group_id'),
-            'sport_id' => $request->input('sport_id'),
-            'user_id' => $request->input('user_id'),
+            'group_id' => $group_id,
+            'sport_id' => $sport_id,
+            'user_id' => $user->id,
         ]);
 
-        return redirect()->route('practices.index')->with('success', 'Entrainement créé avec succès.');
+        return redirect()->route('practices.edit')->with('success', 'Entrainement créé avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Practice $practice)
     {
         $practice->load('sport');
@@ -64,23 +90,19 @@ class PracticeController extends Controller
         return view('practices.show', compact('practice'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Practice $practice)
     {
-        $sports = Sport::all();
-        $users = User::all();
-        $groups = Group::all();
-        $practice->load('sport');
-        $practice->load('group');
-        $practice->load('user');
-        return view('practices.edit', compact('practice', 'sports', 'groups', 'users'));
+         $practiceRelation = Practice::with([
+        'user',
+        'group',
+        'sport',
+        'values.field.unit'
+        ])->findOrFail($practice->id);
+
+         $units = Unit::all();
+        return view('practices.edit', compact('practiceRelation', 'practice', 'units'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Practice $practice)
     {
         $validated = $request->validate([

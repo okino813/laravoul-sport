@@ -91,9 +91,17 @@ class GroupController extends Controller
             return view('auth.login');
         }
 
+        $members = Member::with(['user', 'group'])
+                ->where('group_id', $group->id)  // Filtrer par l'ID du groupe
+                ->get();
 
 
-        return view('groups.showview', compact('group'));
+        $coach = User::find($group->user_id);
+
+        $sportsGroup = $group->sports;
+
+
+        return view('groups.showview', compact('group', 'members', 'coach', 'sportsGroup'));
     }
 
     /**

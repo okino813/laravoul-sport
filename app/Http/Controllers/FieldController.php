@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\PracticeValue;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,19 +31,26 @@ class FieldController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($groupid, $practiceid,Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'unit_id' => 'required|integer|exists:units,id',
+            'value' => 'required|string|max:255',
+            'unit' => 'required|integer|exists:units,id',
         ]);
 
-        Field::create([
+        $field = Field::create([
             'name' => $request->input('name'),
-            'unit_id' => $request->input('unit_id'),
+            'unit_id' => $request->input('unit'),
+        ]);
+        PracticeValue::create([
+            'value' => $request->input('value'),
+            'practice_id' => $practiceid,
+            'field_id' => $field->id,
+
         ]);
 
-        return redirect()->route('fields.index')->with('success', 'Utilisateur créé avec succès.');
+        return redirect()->back()->with('success', 'Utilisateur créé avec succès.');
     }
 
     /**
