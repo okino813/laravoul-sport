@@ -11,7 +11,7 @@
         <li>Mes groupes / équipes
             <ul>
                 @foreach($groupsList as $groupItem)
-                    <li><a href="/dashboard/group/{{$groupItem->id}}">{{$groupItem->name}}</a></li>{{-- Ici on peut afficher les infos de l'équipe avec
+                    <li><a href="/dashboard/group/view/{{$groupItem->id}}">{{$groupItem->name}}</a></li>{{-- Ici on peut afficher les infos de l'équipe avec
                 la liste des sports et des membres --}}
                 @endforeach
 

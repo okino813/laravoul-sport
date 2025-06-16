@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\GroupSport;
+use App\Models\Sport;
+use App\Models\User;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,14 +31,20 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Group $group, Sport $sport)
     {
         $user = Auth::user();
-        if($user == null){
+        if ($user == null) {
             return view('auth.login');
         }
 
-        return view('groups.create');
+
+        if ($user->id = $group->user_id) {
+            return view('groups.create');
+        }
+        else{
+            return view('auth.login');
+        }
     }
 
     /**
@@ -74,22 +84,57 @@ class GroupController extends Controller
         return view('groups.show', compact('group'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Group $group)
+    public function showview(Group $group)
     {
         $user = Auth::user();
         if($user == null){
             return view('auth.login');
         }
 
-        if($group->user_id == $user->id)
-        {
-            return view('dashboard.index');
+
+
+        return view('groups.showview', compact('group'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Group $group)
+    {
+        $user = Auth::user();
+        if ($user == null) {
+            return view('auth.login');
+        }
+
+        if ($user->id = $group->user_id) {
+
+            // On récupère les membres
+            $members = Member::with(['user', 'group'])
+                ->where('group_id', $group->id)  // Filtrer par l'ID du groupe
+                ->get();
+
+            // Récupérer les utilisateurs qui ne sont pas membres de ce groupe
+            $membersIds = Member::where('group_id', $group->id)
+                ->pluck('user_id');  // On récupère tous les user_id des membres du groupe
+
+            // Récupérer tous les utilisateurs sauf ceux qui sont déjà membres
+            $usersNotInGroup = User::whereNotIn('id', $membersIds)->get();
+
+            $coach = User::find($group->user_id);
+
+            // On récupère tous les sports associés au groupe via la relation 'sports' (correspond à 'group_sport')
+            $sportsGroup = $group->sports;  // Utilisation de la relation 'sports' définie dans le modèle 'Group'
+
+            // Récupérer les sports qui ne sont pas encore liés à ce groupe
+            $sportIds = $sportsGroup->pluck('id');  // On récupère tous les sport_id déjà associés au groupe
+
+            // Récupérer tous les sports sauf ceux qui sont déjà liés au groupe
+            $sportsNotInGroup = Sport::whereNotIn('id', $sportIds)->get();
+
+            return view('groups.edit', compact('group', 'members', 'usersNotInGroup', 'coach', 'sportsGroup', 'sportsNotInGroup'));
         }
         else{
-            return view('groups.edit', compact('group'));
+            return view('auth.login');
         }
     }
 

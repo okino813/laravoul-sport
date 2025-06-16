@@ -21,7 +21,7 @@
                     <td>{{ $group->id }}</td>
                     <td>{{ $group->name }}</td>
                     <td>
-                        <a href="{{ route('groups.show', $group) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ route('dashboard.group.showview', $group) }}" class="btn btn-info btn-sm">Voir</a>
                     </td>
                 </tr>
                 @endforeach

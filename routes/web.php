@@ -24,7 +24,12 @@ Route::put('/dashboard/user/password/update',[UserController::class, 'updatePass
 
 Route::get('/dashboard/group/create', [GroupController::class, 'create'])->name('dashboard.group.create')->middleware('share.data');
 Route::get('/dashboard/group/{group}', [GroupController::class, 'show'])->name('dashboard.group.show')->middleware('share.data');
+Route::get('/dashboard/group/view/{group}', [GroupController::class, 'showview'])->name('dashboard.group.showview')->middleware('share.data');
+Route::get('/dashboard/group/edit/{group}', [GroupController::class, 'edit'])->name('dashboard.group.edit')->middleware('share.data');
 Route::delete('/dashboard/group/{group}', [GroupController::class, 'destroy'])->name('dashboard.group.destroy')->middleware('share.data');
+Route::delete('/dashboard/group/membre/{group}/{member}', [MemberController::class, 'destroy'])->name('dashboard.members.delete')->middleware('share.data');
+Route::delete('/dashboard/group/sport/{group}/{sport}', [GroupSportController::class, 'destroy'])->name('dashboard.groupsport.delete')->middleware('share.data');
+Route::post('/dashboard/group/sport/create', [GroupSportController::class, 'store'])->name('dashboard.group.sport.create')->middleware('share.data');
 
 
 Route::get('/dashboard/groups/', [GroupController::class, 'index'])->name('dashboard.groups.index')->middleware('share.data');
