@@ -19,11 +19,18 @@ class GroupsLis
     public function handle(Request $request, Closure $next): Response
     {
          $user = Auth::user();
-        $groupsList = Group::where('user_id', $user->id)->get();
+         if($user != null)
+         {
+             $groupsList = Group::where('user_id', $user->id)->get();
+            // Partage la variable $foo à toutes les vues
+            View::share('groupsList', $groupsList);
+            return $next($request);
+         }
+         else{
+         return back();
 
-        // Partage la variable $foo à toutes les vues
-        View::share('groupsList', $groupsList);
+         }
 
-        return $next($request);
+
     }
 }

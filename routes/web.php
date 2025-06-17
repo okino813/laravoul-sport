@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 // Dasboard
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [UserController::class, 'show'])->middleware('share.data');
 Route::get('/dashboard/user', [UserController::class, 'edit'])->middleware('share.data');
 Route::put('/dashboard/user/update',[UserController::class, 'update'])->name('dashboard.users.update')->middleware('share.data');
@@ -40,10 +41,10 @@ Route::put('/dashboard/practices/update', [PracticeController::class, 'update'])
 Route::get('/dashboard/mygroups/', [GroupController::class, 'mygroups'])->name('dashboard.groups.mygroups')->middleware('share.data');
 
 // Route crud sans foreing key
-Route::resource('users', UserController::class);
+Route::resource('users', UserController::class)->middleware('share.data');
 Route::resource('units', UnitController::class);
 Route::resource('sports', SportController::class);
-Route::resource('groups', GroupController::class);
+Route::resource('groups', GroupController::class)->middleware('share.data');
 
 
 // Ici c'est des CRUD avec des foring key
@@ -61,4 +62,4 @@ Route::resource('members', MemberController::class)->only([
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
