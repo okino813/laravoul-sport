@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\PracticeValue;
 use App\Models\Unit;
 use App\Models\Group;
 use App\Models\Practice;
@@ -18,14 +19,25 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        $practices = Practice::all();
-        return view('practices.index',  compact('practices'));
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
+      $practiceRelation = Practice::with([
+        'user',
+        'group',
+        'sport',
+        'values.field.unit'
+    ])->where('user_id', $user->id)->get();
+
+        return view('practices.index',  compact('practiceRelation'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($group_id,$practice_id)
+    public function create()
     {
         $user = Auth::user();
         if($user == null){
@@ -82,13 +94,29 @@ class PracticeController extends Controller
         return redirect()->route('practices.edit')->with('success', 'Entrainement créé avec succès.');
     }
 
-    public function show(Practice $practice)
-    {
-        $practice->load('sport');
-        $practice->load('user');
-        $practice->load('group');
-        return view('practices.show', compact('practice'));
-    }
+//    public function show(Practice $practice)
+//    {
+//        $user = Auth::user();
+//        if($user == null){
+//            return view('auth.login');
+//        }
+//
+//         $practiceRelation = Practice::with([
+//        'user',
+//        'group',
+//        'sport',
+//        'values.field.unit'
+//        ])->where('id', $practice->id)->first();
+//
+////        dd($practiceRelation);
+//
+//        if($practiceRelation->user_id == $user->id){
+//            return view('practices.edit', compact('practiceRelation', 'practice'));
+//
+//        }
+//
+//        return back();
+//    }
 
     public function edit(Practice $practice)
     {
@@ -113,7 +141,18 @@ class PracticeController extends Controller
         ]);
 
         $practice->update($validated);
-        return redirect()->route('practices.index')->with('success', 'Field mis à jour avec succès.');
+
+        // Mise à jour des champs dynamiques
+        $fields = $request->input('fields', []);
+
+        foreach ($fields as $fieldId => $fieldValue) {
+            $practiceValue = PracticeValue::where("field_id", $fieldId)->first();
+            if ($practiceValue) {
+                $practiceValue->value = $fieldValue;
+                $practiceValue->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Field mis à jour avec succès.');
     }
 
     /**

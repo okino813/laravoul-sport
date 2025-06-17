@@ -35,6 +35,8 @@ Route::post('/dashboard/group/{group}/practice/{practice}/field/create', [FieldC
 
 
 Route::get('/dashboard/groups/', [GroupController::class, 'index'])->name('dashboard.groups.index')->middleware('share.data');
+Route::get('/dashboard/practices/', [PracticeController::class, 'index'])->name('dashboard.practices.index')->middleware('share.data');
+Route::put('/dashboard/practices/update', [PracticeController::class, 'update'])->name('dashboard.practices.update')->middleware('share.data');
 Route::get('/dashboard/mygroups/', [GroupController::class, 'mygroups'])->name('dashboard.groups.mygroups')->middleware('share.data');
 
 // Route crud sans foreing key
@@ -46,7 +48,7 @@ Route::resource('groups', GroupController::class);
 
 // Ici c'est des CRUD avec des foring key
 Route::resource('fields', FieldController::class);
-Route::resource('practices', PracticeController::class);
+Route::resource('practices', PracticeController::class)->middleware('share.data');
 Route::resource('practicevalues', PracticeValueController::class);
 
 // CRUD table pivot

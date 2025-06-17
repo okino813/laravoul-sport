@@ -23,7 +23,7 @@
 
         <li>Mes entrainements
             <ul>
-                <li><a href="#">Historique</a></li> {{-- Ici on liste les entrainements avec la possibilité de
+                <li><a href="{{route("dashboard.practices.index")}}">Historique</a></li> {{-- Ici on liste les entrainements avec la possibilité de
                 cliquer sur l'un deux et de consulter le détails--}}
                 <li><a href="{{route("dashboard.practice.create")}}">Nouvel entrainement</a></li> {{-- Page pour crée des entrainements, ansi que les champs
                 Je pense qu'il faudrait que lorsque qu'on crée un entrainement, ça chercher automatiquement tout les champs

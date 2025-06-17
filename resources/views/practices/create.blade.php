@@ -4,7 +4,6 @@
 
 @section('content')
    <div class="container">
-        <a href="{{ route('practices.index') }}" class="back-btn">< Retour</a>
         <h1>Créer un entrainement</h1>
 
         @if ($errors->any())
