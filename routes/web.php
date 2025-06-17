@@ -22,7 +22,7 @@ Route::put('/dashboard/user/update',[UserController::class, 'update'])->name('da
 Route::get('/dashboard/user/password', [UserController::class, 'editPassword'])->name('editPassword')->middleware('share.data');
 Route::put('/dashboard/user/password/update',[UserController::class, 'updatePassword'])->name('dashboard.users.password.update')->middleware('share.data');
 
-Route::get('/dashboard/group/create', [GroupController::class, ' create'])->name('dashboard.group.create')->middleware('share.data');
+Route::get('/dashboard/group/create', [GroupController::class, 'create'])->name('dashboard.group.create')->middleware('share.data');
 Route::get('/dashboard/group/{group}', [GroupController::class, 'show'])->name('dashboard.group.show')->middleware('share.data');
 Route::get('/dashboard/group/view/{group}', [GroupController::class, 'showview'])->name('dashboard.group.showview')->middleware('share.data');
 Route::get('/dashboard/group/edit/{group}', [GroupController::class, 'edit'])->name('dashboard.group.edit')->middleware('share.data');

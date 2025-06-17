@@ -31,20 +31,15 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Group $group, Sport $sport)
+    public function create()
     {
         $user = Auth::user();
         if ($user == null) {
             return view('auth.login');
         }
 
+        return view('groups.create');
 
-        if ($user->id = $group->user_id) {
-            return view('groups.create');
-        }
-        else{
-            return view('auth.login');
-        }
     }
 
     /**

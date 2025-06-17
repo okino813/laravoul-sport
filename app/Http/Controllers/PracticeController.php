@@ -94,32 +94,14 @@ class PracticeController extends Controller
         return redirect()->route('practices.edit')->with('success', 'Entrainement créé avec succès.');
     }
 
-//    public function show(Practice $practice)
-//    {
-//        $user = Auth::user();
-//        if($user == null){
-//            return view('auth.login');
-//        }
-//
-//         $practiceRelation = Practice::with([
-//        'user',
-//        'group',
-//        'sport',
-//        'values.field.unit'
-//        ])->where('id', $practice->id)->first();
-//
-////        dd($practiceRelation);
-//
-//        if($practiceRelation->user_id == $user->id){
-//            return view('practices.edit', compact('practiceRelation', 'practice'));
-//
-//        }
-//
-//        return back();
-//    }
 
     public function edit(Practice $practice)
     {
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+
          $practiceRelation = Practice::with([
         'user',
         'group',
@@ -127,29 +109,42 @@ class PracticeController extends Controller
         'values.field.unit'
         ])->findOrFail($practice->id);
 
-         $units = Unit::all();
-        return view('practices.edit', compact('practiceRelation', 'practice', 'units'));
+        if($practiceRelation->user_id == $user->id){
+           $units = Unit::all();
+            return view('practices.edit', compact('practiceRelation', 'practice', 'units'));
+        }
+        return back();
+
+
     }
 
     public function update(Request $request, Practice $practice)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'group_id' => 'required|integer|exists:groups,id',
-            'sport_id' => 'required|integer|exists:sports,id',
-            'user_id' => 'required|integer|exists:users,id',
-        ]);
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+        if($user->id = $request->input("user_id")) {
 
-        $practice->update($validated);
 
-        // Mise à jour des champs dynamiques
-        $fields = $request->input('fields', []);
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'group_id' => 'required|integer|exists:groups,id',
+                'sport_id' => 'required|integer|exists:sports,id',
+                'user_id' => 'required|integer|exists:users,id',
+            ]);
 
-        foreach ($fields as $fieldId => $fieldValue) {
-            $practiceValue = PracticeValue::where("field_id", $fieldId)->first();
-            if ($practiceValue) {
-                $practiceValue->value = $fieldValue;
-                $practiceValue->save();
+            $practice->update($validated);
+
+            // Mise à jour des champs dynamiques
+            $fields = $request->input('fields', []);
+
+            foreach ($fields as $fieldId => $fieldValue) {
+                $practiceValue = PracticeValue::where("field_id", $fieldId)->first();
+                if ($practiceValue) {
+                    $practiceValue->value = $fieldValue;
+                    $practiceValue->save();
+                }
             }
         }
         return redirect()->back()->with('success', 'Field mis à jour avec succès.');
@@ -160,7 +155,13 @@ class PracticeController extends Controller
      */
     public function destroy(Practice $practice)
     {
-        $practice->delete();
-        return redirect()->route('practices.index')->with('success', 'Field mis à jour avec succès.');
+        $user = Auth::user();
+        if($user == null){
+            return view('auth.login');
+        }
+        if($user->id == $practice->id) {
+            $practice->delete();
+            return redirect()->route('practices.index')->with('success', 'Field mis à jour avec succès.');
+        }
     }
 }
