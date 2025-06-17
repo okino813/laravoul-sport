@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Group;
+use App\Models\Member;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,16 @@ class GroupsLis
          $user = Auth::user();
          if($user != null)
          {
-             $groupsList = Group::where('user_id', $user->id)->get();
-            // Partage la variable $foo à toutes les vues
-            View::share('groupsList', $groupsList);
-            return $next($request);
-         }
+
+            $groupIds = Member::where('user_id', $user->id)->pluck('group_id');
+
+            $groupsList = Group::whereIn('id', $groupIds)
+                ->where('user_id', '!=', $user->id) // Exclure les groupes où il est coach
+                ->get();
+                // Partage la variable $foo à toutes les vues
+                View::share('groupsList', $groupsList);
+                return $next($request);
+             }
          else{
          return back();
 

@@ -76,7 +76,12 @@ class GroupController extends Controller
             return view('auth.login');
         }
 
-        return view('groups.show', compact('group'));
+        if($group->id != 1) {
+            return view('groups.show', compact('group'));
+        }
+        else{
+            return back();
+        }
     }
 
     public function showview(Group $group)
@@ -86,17 +91,23 @@ class GroupController extends Controller
             return view('auth.login');
         }
 
-        $members = Member::with(['user', 'group'])
-                ->where('group_id', $group->id)  // Filtrer par l'ID du groupe
-                ->get();
+        if($group->id != 1)
+        {
+            $members = Member::with(['user', 'group'])
+                    ->where('group_id', $group->id)  // Filtrer par l'ID du groupe
+                    ->get();
 
 
-        $coach = User::find($group->user_id);
+            $coach = User::find($group->user_id);
 
-        $sportsGroup = $group->sports;
+            $sportsGroup = $group->sports;
 
 
-        return view('groups.showview', compact('group', 'members', 'coach', 'sportsGroup'));
+            return view('groups.showview', compact('group', 'members', 'coach', 'sportsGroup'));
+        }
+        else{
+            return back();
+        }
     }
 
     /**
@@ -109,7 +120,8 @@ class GroupController extends Controller
             return view('auth.login');
         }
 
-        if ($user->id = $group->user_id) {
+        if ($user->id = $group->user_id and $group->id != 1) {
+
 
             // On récupère les membres
             $members = Member::with(['user', 'group'])
@@ -146,12 +158,19 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+        $user = Auth::user();
+        if ($user == null) {
+            return view('auth.login');
+        }
 
-        $group->update($validated);
-        return redirect()->route('groups.index')->with('success', 'Group mis à jour avec succès.');
+        if ($user->id = $group->user_id) {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+
+            $group->update($validated);
+            return redirect()->route('groups.index')->with('success', 'Group mis à jour avec succès.');
+        }
     }
 
     /**
@@ -159,7 +178,17 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        $group->delete();
-        return redirect()->route('dashboard.groups.index')->with('success', 'Group mis à jour avec succès.');
+        $user = Auth::user();
+        if ($user == null) {
+            return view('auth.login');
+        }
+
+        if ($user->id = $group->user_id) {
+            $group->delete();
+            return redirect()->route('dashboard.groups.index')->with('success', 'Group mis à jour avec succès.');
+        }
+        else{
+            return back();
+        }
     }
 }

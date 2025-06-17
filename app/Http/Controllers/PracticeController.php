@@ -45,6 +45,10 @@ class PracticeController extends Controller
         }
 
          $groups = $user->groups()->with('sports')->get();
+
+
+
+
         return view('practices.create', compact('groups', 'user'));
     }
 
@@ -84,14 +88,14 @@ class PracticeController extends Controller
             return back()->withErrors(['champs' => 'Sport non lié à ce groupe'])->withInput();
         }
 
-        Practice::create([
+        $result = Practice::create([
             'name' => $request->input('name'),
             'group_id' => $group_id,
             'sport_id' => $sport_id,
             'user_id' => $user->id,
         ]);
 
-        return redirect()->route('practices.edit')->with('success', 'Entrainement créé avec succès.');
+        return redirect()->route('practices.edit', $result->id)->with('success', 'Entrainement créé avec succès.');
     }
 
 
@@ -159,9 +163,12 @@ class PracticeController extends Controller
         if($user == null){
             return view('auth.login');
         }
-        if($user->id == $practice->id) {
+        if($user->id == $practice->user_id) {
             $practice->delete();
-            return redirect()->route('practices.index')->with('success', 'Field mis à jour avec succès.');
+            return redirect()->route('dashboard.practices.index')->with('success', 'Field mis à jour avec succès.');
+        }
+        else{
+            return back();
         }
     }
 }

@@ -13,8 +13,10 @@
             <strong>Mes groupes / équipes</strong>
             <ul class="list-unstyled ms-3">
                 @foreach($groupsList as $groupItem)
-                    <li><a href="/dashboard/group/view/{{$groupItem->id}}" class="text-decoration-none text-light">{{ $groupItem->name }}</a></li>
-                @endforeach
+                    @if($groupItem->id != 1)
+                        <li><a href="/dashboard/group/view/{{$groupItem->id}}" class="text-decoration-none text-light">{{ $groupItem->name }}</a></li>
+                    @endif
+                        @endforeach
                 <li><a href="{{ route('dashboard.groups.index') }}" class="text-decoration-none text-light">Toutes les équipes</a></li>
             </ul>
         </li>

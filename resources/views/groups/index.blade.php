@@ -16,15 +16,17 @@
         </thead>
         <tbody>
             @foreach ($groups as $group)
-            <tr>
-                <td>{{ $group->id }}</td>
-                <td>{{ $group->name }}</td>
-                <td class="text-center">
-                    <a href="{{ route('dashboard.group.showview', $group) }}" class="btn btn-sm btn-danger">
-                        🔍 Voir
-                    </a>
-                </td>
-            </tr>
+                @if($group->id != 1)
+                    <tr>
+                        <td>{{ $group->id }}</td>
+                        <td>{{ $group->name }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('dashboard.group.showview', $group) }}" class="btn btn-sm btn-danger">
+                                🔍 Voir
+                            </a>
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
