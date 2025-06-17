@@ -12,7 +12,7 @@
                 <p class="card-text"><strong>Créé le :</strong> {{ $group->created_at->format('d/m/Y H:i') }}</p>
                 <p class="card-text"><strong>Mis à jour le :</strong> {{ $group->updated_at->format('d/m/Y H:i') }}</p>
 
-                <a href="{{ route('groups.edit', $group) }}" class="btn btn-warning">Modifier</a>
+                <a href="{{ route('dashboard.group.edit', $group) }}" class="btn btn-warning">Modifier</a>
 
                 <form action="{{ route('groups.destroy', $group) }}" method="POST" class="d-inline" onsubmit="return confirm('Confirmer la suppression ?')">
                     @csrf

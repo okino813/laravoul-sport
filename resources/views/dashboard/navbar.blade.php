@@ -1,44 +1,43 @@
-<div class="sidebar">
-    <h2>Paramêtre Atlhète</h2>
-    <ul>
-        <li>Profile
-            <ul>
-                <li><a href="/dashboard/user">Info personel</a></li>
-                <li><a href="/dashboard/user/password">Sécurité</a></li>
+<div class="sidebar bg-dark text-light p-4">
+    <h2 class="text-danger">Paramètres Athlète</h2>
+    <ul class="list-unstyled">
+        <li>
+            <strong>Profil</strong>
+            <ul class="list-unstyled ms-3">
+                <li><a href="/dashboard/user" class="text-decoration-none text-light">Infos personnelles</a></li>
+                <li><a href="/dashboard/user/password" class="text-decoration-none text-light">Sécurité</a></li>
             </ul>
         </li>
 
-        <li>Mes groupes / équipes
-            <ul>
+        <li class="mt-3">
+            <strong>Mes groupes / équipes</strong>
+            <ul class="list-unstyled ms-3">
                 @foreach($groupsList as $groupItem)
-                    <li><a href="/dashboard/group/{{$groupItem->id}}">{{$groupItem->name}}</a></li>{{-- Ici on peut afficher les infos de l'équipe avec
-                la liste des sports et des membres --}}
-                @endforeach
-
-                <li><a href="{{route("dashboard.groups.index")}}">Toutes les équipes</a></li> {{-- Ici on peut afficher la liste des groups
-                ainsi que la possibilité de cliquer sur une et de voir les infos de l'équipe avec
-                la liste des sports et des membres --}}
+                    @if($groupItem->id != 1)
+                        <li><a href="/dashboard/group/view/{{$groupItem->id}}" class="text-decoration-none text-light">{{ $groupItem->name }}</a></li>
+                    @endif
+                        @endforeach
+                <li><a href="{{ route('dashboard.groups.index') }}" class="text-decoration-none text-light">Toutes les équipes</a></li>
             </ul>
         </li>
 
-        <li>Mes entrainements
-            <ul>
-                <li><a href="#">Historique</a></li> {{-- Ici on liste les entrainements avec la possibilité de
-                cliquer sur l'un deux et de consulter le détails--}}
-                <li><a href="#">Nouvel entrainement</a></li> {{-- Page pour crée des entrainements, ansi que les champs
-                Je pense qu'il faudrait que lorsque qu'on crée un entrainement, ça chercher automatiquement tout les champs
-                qu'il avait au précêdant et que ça les affiches. Comme ça l'utiliateur n'a pas à recrée ces champs là à la mano--}}
+        <li class="mt-3">
+            <strong>Mes entraînements</strong>
+            <ul class="list-unstyled ms-3">
+                <li><a href="{{ route('dashboard.practices.index') }}" class="text-decoration-none text-light">Historique</a></li>
+                <li><a href="{{ route('dashboard.practice.create') }}" class="text-decoration-none text-light">Nouvel entraînement</a></li>
             </ul>
         </li>
     </ul>
 
-     <h2>Paramêtre Coach</h2>
-    <ul>
-        <li>Group
-            <ul>
-                <li><a href="{{route("dashboard.group.create")}}">Crée un group</a></li>
-                <li><a href="{{route("dashboard.groups.mygroups")}}">Mes groups</a></li>
-                {{-- Lite des groupes avec boutons modifier et ajout de membres et la supression, ainsi que les sports--}}
+    <h2 class="text-danger mt-5">Paramètres Coach</h2>
+    <ul class="list-unstyled">
+        <li>
+            <strong>Groupes</strong>
+            <ul class="list-unstyled ms-3">
+                <li><a href="{{ route('dashboard.group.create') }}" class="text-decoration-none text-light">Créer un groupe</a></li>
+                <li><a href="{{ route('dashboard.groups.mygroups') }}" class="text-decoration-none text-light">Mes groupes</a></li>
             </ul>
         </li>
+    </ul>
 </div>

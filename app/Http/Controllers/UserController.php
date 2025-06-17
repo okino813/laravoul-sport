@@ -59,7 +59,7 @@ class UserController extends Controller
             return view('auth.login');
         }
 
-        return view('dashboard.user', compact('user'));
+        return view('dashboard.index', compact('user'));
     }
 
     /**

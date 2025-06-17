@@ -1,5 +1,64 @@
-.content{
-    background: #2C2C2C;
-    width: 100%;
-    color: white;
+.content {
+  background: $background-dark;
+  width: 100%;
+  color: $text-light;
+  padding: 20px;
+
+  .container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+
+    h1 {
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      color: $red-main;
+    }
+
+    p {
+      margin-bottom: 3rem;
+    }
+
+    .row {
+      gap: 1.5rem;
+
+      .col-md-4 {
+        .card {
+          background-color: $card-dark !important;
+          border: 1px solid $red-main !important;
+          box-shadow: 0 0 10px rgba($red-main, 0.2);
+
+          .card-body {
+            h5 {
+              color: $red-main;
+            }
+              .card-text{
+                  color: white;
+              }
+
+            a.btn-danger {
+              background-color: $red-main !important;
+              border-color: $red-main !important;
+
+              &:hover {
+                background-color: $red-hover !important;
+                border-color: $red-border-hover !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    hr {
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+      border-color: $red-main;
+    }
+
+    .text-center {
+      p {
+        color: #aaa;
+      }
+    }
+  }
 }
